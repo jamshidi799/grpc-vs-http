@@ -1,0 +1,17 @@
+syntax = "proto3";
+package product;
+
+service Product {
+  rpc update(ProductProto) returns (ProductStatsProto) {}
+}
+
+message ProductProto {
+  string title = 1;
+  string image = 2;
+  int32 price = 3;
+  string description = 4;
+}
+
+message ProductStatsProto {
+  int32 visit_count = 1;
+}
