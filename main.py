@@ -1,5 +1,5 @@
 from concurrent import futures
-
+import threading
 import grpc
 import product_pb2_grpc
 import product_pb2
@@ -16,7 +16,7 @@ class ProductServer(product_pb2_grpc.ProductServicer):
         return product_pb2.ProductStatsProto(visit_count=self.visit_count)
 
 
-def main():
+def start_grpc_server():
     server = grpc.server(futures.ThreadPoolExecutor())
 
     product_pb2_grpc.add_ProductServicer_to_server(ProductServer(), server)
@@ -28,5 +28,5 @@ def main():
 
 
 if __name__ == '__main__':
+    threading.Thread(target=start_grpc_server).start()
     app.run(debug=False, port=5000)
-    # main()
